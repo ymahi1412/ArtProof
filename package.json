@@ -1,0 +1,22 @@
+{
+  "name": "artproof",
+  "version": "1.0.0",
+  "description": "ArtProof - Blockchain Provenance & Royalty Infrastructure for Physical Art (KBA Blockchain Developer internship project)",
+  "license": "MIT",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "demo:local": "hardhat run scripts/demo.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0",
+    "dotenv": "^16.4.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.5.0"
+  }
+}
