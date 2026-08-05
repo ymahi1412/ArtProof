@@ -56,6 +56,11 @@ This is being built in stages. As of this submission:
   payment split, reentrancy protection, stale-listing and approval-revocation checks.
 - Full Hardhat test suite (deployment, minting, transfers, resale, royalty math,
   exhibition records, access control, invalid inputs, and a dedicated reentrancy-attack
+- Deployed live on Sepolia public testnet:
+  - ArtProof: `0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc`
+  - ArtProofMarketplace: `0x174597CC27DdD8A3ddec7b552555132Fe625332a`
+  - View on Etherscan: 
+https://sepolia.etherscan.io/address/0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc
   test) — see `test/`.
 - Local deployment script (`scripts/deploy.js`) and an end-to-end scripted demo
   (`scripts/demo.js`) that walks through the entire workflow on a local Hardhat node.
