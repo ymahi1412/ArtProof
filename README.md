@@ -39,9 +39,7 @@ ownership of the token is not the same thing as legal ownership of the physical 
 
 ## 2. Team Members
 
-> _Fill in your name / roll number / any teammates here before submission._
-
-- [Your Name] — Blockchain Developer Intern, Kerala Blockchain Academy
+- Mahi Yadav — Blockchain Developer Intern, Kerala Blockchain Academy
 
 ---
 
