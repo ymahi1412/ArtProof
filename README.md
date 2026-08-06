@@ -54,14 +54,14 @@ This is being built in stages. As of this submission:
   payment split, reentrancy protection, stale-listing and approval-revocation checks.
 - Full Hardhat test suite (deployment, minting, transfers, resale, royalty math,
   exhibition records, access control, invalid inputs, and a dedicated reentrancy-attack
+- Local deployment script (`scripts/deploy.js`) and an end-to-end scripted demo
+  (`scripts/demo.js`) that walks through the entire workflow on a local Hardhat node.
 - Deployed live on Sepolia public testnet:
   - ArtProof: `0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc`
   - ArtProofMarketplace: `0x174597CC27DdD8A3ddec7b552555132Fe625332a`
   - View on Etherscan: 
 https://sepolia.etherscan.io/address/0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc
   test) — see `test/`.
-- Local deployment script (`scripts/deploy.js`) and an end-to-end scripted demo
-  (`scripts/demo.js`) that walks through the entire workflow on a local Hardhat node.
 
 **🚧 Roadmap / not yet built (planned next)**
 - React frontend (Home, Connect Wallet, Artist Dashboard, Register Artwork, Artwork
@@ -69,7 +69,6 @@ https://sepolia.etherscan.io/address/0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc
 - Real IPFS upload flow for metadata + images (currently the demo script uses a
   placeholder `ipfs://` URI to keep the contract layer testable independently of an
   IPFS pinning step).
-- Public Sepolia testnet deployment + Etherscan verification.
 
 This staged approach — proving the contract layer works correctly first, with
 real automated tests, before building the UI on top of it — is intentional: it
@@ -181,13 +180,24 @@ register → first sale → resale with automatic royalty split → verification
 exhibition/custody logging — using Hardhat's built-in test accounts to play the roles
 of artist, Collector A, Collector B, and a museum.
 
-**(Optional, later) Deploy to the free Sepolia public testnet:**
+**Interact with the live Sepolia deployment:**
+
+ArtProof is already deployed and verified working on the Sepolia public testnet:
+- ArtProof: `0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc`
+- ArtProofMarketplace: `0x174597CC27DdD8A3ddec7b552555132Fe625332a`
+- View on Etherscan: https://sepolia.etherscan.io/address/0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc
+
+**To redeploy a fresh copy to Sepolia** (e.g. after modifying the contracts):
 ```bash
+cp .env.example .env
+# fill in PRIVATE_KEY with a throwaway wallet's key, funded with free Sepolia faucet ETH
 npx hardhat run scripts/deploy.js --network sepolia
 ```
-Requires `.env` to be filled in as described above, and free faucet Sepolia ETH in
-the deploying wallet (e.g. from the [Google Cloud Sepolia faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
-or [Sepolia PoW faucet](https://sepolia-faucet.pk910.de/)).
+Requires free faucet Sepolia ETH in the deploying wallet (e.g. from the
+[Google Cloud Sepolia faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
+or [Sepolia PoW faucet](https://sepolia-faucet.pk910.de/)). This deploys new contract
+instances at new addresses — it does not update or modify the already-deployed ones
+above, since smart contracts are immutable once deployed.
 
 ---
 
