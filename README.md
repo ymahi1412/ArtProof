@@ -37,9 +37,10 @@ ownership of the token is not the same thing as legal ownership of the physical 
 
 ---
 
-## 2. Developed By
+## 2. Team members
 
 - Mahi Yadav — Blockchain Developer Intern, Kerala Blockchain Academy
+- Shivanshi Srivastava — Blockchain Developer Intern, Kerala Blockchain Academy
 
 ---
 
