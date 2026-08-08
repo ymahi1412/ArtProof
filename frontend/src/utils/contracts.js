@@ -19,11 +19,9 @@ export const DEPLOYMENTS = {
     name: "Sepolia",
     artProof: "0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc",
     marketplace: "0x174597CC27DdD8A3ddec7b552555132Fe625332a",
-    // Block the contracts were actually deployed at. Find it on Etherscan:
-    // open the ArtProof address -> "Contract Creation" tx -> the block number shown there.
-    // Until it's filled in, getLogsChunked() below just walks back from the current
-    // block in safe windows, which still works but does a bit of extra scanning.
-    deployedAtBlock: 0,
+    // Block the contracts were actually deployed at (confirmed via Etherscan
+    // "Contract Created" transaction for ArtProof).
+    deployedAtBlock: 11427390,
   },
 };
 
