@@ -12,14 +12,46 @@ export const DEPLOYMENTS = {
     name: "Hardhat Local",
     artProof: "", // <-- paste your local deploy.js output here each time you restart `npx hardhat node`
     marketplace: "", // <-- same
+    deployedAtBlock: 0, // local chain always starts fresh at block 0
   },
   // chainId 11155111 = Sepolia public testnet
   11155111: {
     name: "Sepolia",
     artProof: "0xc82ee9D616F9a22387D1B47Aace2f4B8bb9750bc",
     marketplace: "0x174597CC27DdD8A3ddec7b552555132Fe625332a",
+    // Block the contracts were actually deployed at. Find it on Etherscan:
+    // open the ArtProof address -> "Contract Creation" tx -> the block number shown there.
+    // Until it's filled in, getLogsChunked() below just walks back from the current
+    // block in safe windows, which still works but does a bit of extra scanning.
+    deployedAtBlock: 0,
   },
 };
+
+/**
+ * eth_getLogs (which queryFilter uses under the hood) is capped at a 10,000-block
+ * range by many public RPC endpoints, including MetaMask's own default endpoint
+ * ("range XXXXXXX exceeds limit of 10000"). Scanning from block 0 on a live testnet
+ * like Sepolia (millions of blocks deep) hits that cap immediately, and ethers'
+ * FallbackProvider can't reconcile the resulting per-backend errors, which is what
+ * surfaces as "could not coalesce error" in the UI.
+ *
+ * This walks the range in chunks small enough to stay under that limit.
+ */
+const LOG_CHUNK_SIZE = 9000;
+
+export async function getLogsChunked(contract, filter, fromBlock, provider) {
+  const latest = await provider.getBlockNumber();
+  const start = fromBlock ?? 0;
+  const allEvents = [];
+
+  for (let chunkStart = start; chunkStart <= latest; chunkStart += LOG_CHUNK_SIZE) {
+    const chunkEnd = Math.min(chunkStart + LOG_CHUNK_SIZE - 1, latest);
+    const events = await contract.queryFilter(filter, chunkStart, chunkEnd);
+    allEvents.push(...events);
+  }
+
+  return allEvents;
+}
 
 /**
  * Human-readable ABI fragments for the functions/events the frontend actually

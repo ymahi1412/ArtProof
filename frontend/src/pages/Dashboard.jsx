@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useWallet } from "../hooks/useWallet.jsx";
-import { getArtProofContract } from "../utils/contracts.js";
+import { getArtProofContract, getLogsChunked, getDeployment } from "../utils/contracts.js";
 
 /**
  * ArtProof.sol is NOT ERC721Enumerable (kept out deliberately to stay simple —
@@ -35,9 +35,11 @@ export default function Dashboard() {
 
     setStatus("loading");
     try {
+      const deployment = getDeployment(chainId);
+      const fromBlock = deployment?.deployedAtBlock ?? 0;
       const [mintedEvents, receivedEvents] = await Promise.all([
-        contract.queryFilter(contract.filters.CertificateMinted(null, account)),
-        contract.queryFilter(contract.filters.Transfer(null, account)),
+        getLogsChunked(contract, contract.filters.CertificateMinted(null, account), fromBlock, provider),
+        getLogsChunked(contract, contract.filters.Transfer(null, account), fromBlock, provider),
       ]);
 
       const createdIds = [...new Set(mintedEvents.map((e) => e.args.tokenId.toString()))];

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ethers } from "ethers";
 import { useWallet } from "../hooks/useWallet.jsx";
-import { getArtProofContract, getMarketplaceContract, formatEth, shortenAddress } from "../utils/contracts.js";
+import { getArtProofContract, getMarketplaceContract, getLogsChunked, getDeployment, formatEth, shortenAddress } from "../utils/contracts.js";
 
 /**
  * Like Dashboard, ArtProofMarketplace has no on-chain "list all active listings"
@@ -30,10 +30,12 @@ export default function Marketplace() {
 
     setStatus("loading");
     try {
+      const deployment = getDeployment(chainId);
+      const fromBlock = deployment?.deployedAtBlock ?? 0;
       const [listedEvents, cancelledEvents, saleEvents] = await Promise.all([
-        marketplace.queryFilter(marketplace.filters.Listed()),
-        marketplace.queryFilter(marketplace.filters.ListingCancelled()),
-        marketplace.queryFilter(marketplace.filters.Sale()),
+        getLogsChunked(marketplace, marketplace.filters.Listed(), fromBlock, provider),
+        getLogsChunked(marketplace, marketplace.filters.ListingCancelled(), fromBlock, provider),
+        getLogsChunked(marketplace, marketplace.filters.Sale(), fromBlock, provider),
       ]);
 
       const candidateIds = [...new Set(listedEvents.map((e) => e.args.tokenId.toString()))];
