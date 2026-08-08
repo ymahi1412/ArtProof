@@ -1,0 +1,207 @@
+:root {
+  /* --- Color tokens ---
+     Palette concept: a physical wax-seal certificate, digitized.
+     Warm near-black charcoal ground, parchment for "certificate" surfaces,
+     a wax-seal crimson for primary actions, an aged-gold for verification/royalty accents. */
+  --ink-950: #14120f;
+  --ink-900: #1d1a15;
+  --ink-800: #262219;
+  --ink-700: #33302a;
+  --parchment: #efe7d8;
+  --parchment-dim: #d9cfb8;
+  --text-primary: #f2eee4;
+  --text-muted: #a79c87;
+  --seal-crimson: #a63b32;
+  --seal-crimson-hover: #bf473c;
+  --gold: #c9a227;
+  --gold-dim: #8f7420;
+  --success: #6f9e5b;
+  --danger: #c25450;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink-950);
+  background-image: radial-gradient(circle at 15% 0%, rgba(201, 162, 39, 0.06), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(166, 59, 50, 0.07), transparent 40%);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Visible keyboard focus everywhere, per accessibility floor */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.card {
+  background: var(--ink-900);
+  border: 1px solid var(--ink-700);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--seal-crimson);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--seal-crimson-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--ink-700);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold-dim);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.field label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.field input,
+.field textarea {
+  background: var(--ink-800);
+  border: 1px solid var(--ink-700);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--gold-dim);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.badge-success {
+  background: rgba(111, 158, 91, 0.15);
+  color: var(--success);
+}
+
+.badge-muted {
+  background: rgba(167, 156, 135, 0.15);
+  color: var(--text-muted);
+}
+
+.notice {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--ink-700);
+  background: var(--ink-800);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.notice strong {
+  color: var(--text-primary);
+}
